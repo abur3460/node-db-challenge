@@ -61,16 +61,38 @@ router.get("/resources", (req, res) => {
     });
 });
 
+router.post("/resources", (req, res) => {
+  const resource = req.body;
+  db.addResources(resource)
+    .then((resources) => {
+      if (resources) {
+        res.json(resources);
+      } else {
+        res.status(400).json({ message: "please provide valid params" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to add resources" });
+    });
+});
+
 router.post("/:id/resources", (req, res) => {
-  const newResource = req.body;
-  console.log(newResource);
-  db.addResourceToProject(newResource)
+  const { id } = req.params;
+  const resource = req.body;
+
+  db.addResourceToProject(resource.resource_id, id)
     .then((resource) => {
-      res.status(201).json(resource);
+      if (resource) {
+        res.json(resource);
+      } else {
+        res.status(400).json({ message: "please provide valid params" });
+      }
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({ message: "failed to add resource" });
+      res
+        .status(500)
+        .json({ message: "Failed to add resource to specified project" });
     });
 });
 

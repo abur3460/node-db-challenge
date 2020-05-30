@@ -1,4 +1,5 @@
 const db = require("./data/db-config");
+const util = require("util");
 
 module.exports = {
   listResources,
@@ -61,16 +62,19 @@ function getProject(project_id) {
             .from("projects")
             .where("projects.id", "=", project_id)
             .join(
-              "projectDetails",
-              "projectDetails.project_id",
+              "project_details",
+              "project_details.project_id",
               "=",
               "projects.id"
             )
-            .join("resource", "projectDetails.resource_id", "=", "resource.id")
+            .join("resource", "project_details.resource_id", "=", "resource.id")
             .then((resources) => {
               project.resources = resources;
               console.log(project);
-              return project;
+              // return project;
+              //      ^--- Pain in the ass, finally figured you need to return an array of
+              //           all three objects to have the same output as the above console.log
+              return [project, tasks, resources];
             })
             .catch((err) => {
               console.log(err);
@@ -89,7 +93,7 @@ function getProject(project_id) {
 }
 
 function addResourceToProject(resource_id, project_id) {
-  return db("projectDetails")
+  return db("project_details")
     .insert({ project_id: project_id, resource_id: resource_id })
     .then((response) => {
       return response;

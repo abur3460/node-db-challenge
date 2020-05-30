@@ -29,32 +29,29 @@ exports.up = function (knex) {
       tbl.boolean("completed_task").notNullable().defaultTo("False");
     })
 
-    .createTable("projectDetails", (tbl) => {
+    .createTable("project_details", (tbl) => {
       tbl.increments();
       tbl
         .integer("project_id")
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("projects")
-        .onDelete("RESTRICT") // what happens if the publisher with this id is deleted
-        .onUpdate("CASCADE"); // what happens if the publisher id changes
-
+        .inTable("project")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
       tbl
         .integer("resource_id")
         .unsigned()
         .notNullable()
         .references("id")
         .inTable("resource")
-        .onDelete("RESTRICT") // what happens if the publisher with this id is deleted
-        .onUpdate("CASCADE"); // what happens if the publisher id changes
-      tbl.integer("quantity");
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
     });
 };
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfExists("projectDetails")
     .dropTableIfExists("task")
     .dropTableIfExists("resource")
     .dropTableIfExists("projects");
