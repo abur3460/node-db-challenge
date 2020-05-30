@@ -39,12 +39,21 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
+      -Relational databases refer to database structure where data is organized and arranged into tables of columns and rows. In these types of databases, each row represents a single record and is made up by a collection of columns.
+
+  -SQL is an acronym which stands for Structured Query Language, and is the primary method for interacting with a database and its data. Unlike other object-oriented or declarative programming languages, SQL is highly specialized for querying databases.
 
 - [ ] Why do tables need a `primary key`?
 
+  -Tables need primary keys to serve as a unique identifier of each record in a database. Not only do primary keys distinguish records from one another in a specific table, but these keys are also important in order to query data from another table linked by foreign keys.
+
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+  -These special columns are called foreign keys and are used to reference primary keys in other tables. Foreign keys allow for data in multiple tables to be referenced together, on one single query.
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+  -In order to have a many-to-many relationship between two tables, you would need an “intermediary table”. This is a third table which takes the foreign keys for both tables as well as any other metadata
 
 ## Minimum Viable Product
 
